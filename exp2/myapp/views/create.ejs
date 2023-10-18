@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Center the content on the screen */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .editor-container {
+            text-align: center;
+        }
+
+        /* Style the title */
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Style the title text box */
+        .title-box {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Style the text box */
+        .text-box {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        /* Style the submit/save button and the start new button */
+        .submit-button, .delete-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Hover effect for the buttons */
+        .submit-button:hover, .start-new-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Style the file input and label */
+        .file-input {
+            display: none; /* Hide the default input element */
+        }
+
+        .custom-file-upload {
+            border: 1px solid #ccc;
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+        }
+        .page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+    </style>
+</head>
+<body>
+    <div class="page-container">
+    <div><%- include('navbar') %></div>
+    <div class="editor-container">
+        <div class="title">Yash's Document Editor</div>
+        <input type="text" class="title-box" placeholder="Enter a document title" id="title">
+        <textarea class="text-box" id="content" placeholder="Start writing here"  ></textarea>
+        <button class="submit-button" onclick="submitForm()">Submit/Save</button>
+        <button class="delete-button" onclick="startNew()">Reset</button>
+        <label for="fileInput" class="custom-file-upload">Upload a .txt file</label>
+        <input type="file" id="fileInput" class="file-input" accept=".txt">
+        <br>
+        <a href="/" class="custom-file-upload">Back to all Documents</a>
+    </div>
+</div>
+<script>
+    function submitForm() {
+        saveText();
+    // Capture the values from the title and content elements
+    const title = document.getElementById("title").value;
+    const content = document.getElementById("content").value;
+
+    // Create a data object to send as JSON
+    const data = {
+        title: title,
+        content: content
+    };
+    console.log('inside');
+    // Define the fetch options, including the method, headers, and body
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    };
+
+    // Make the POST request to the server
+    fetch('/create', options)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Assuming the server responds with JSON
+        })
+        .then((responseData) => {
+            // Handle the response from the server (if needed)
+            console.log(responseData);
+            
+        })
+        .catch((error) => {
+            console.error('Fetch error:', error);
+        });
+        
+};
+</script>
+<script>
+    function saveText() {
+        // You can add code here to save the text and title from the input fields
+        // For now, let's simply alert the saved message.
+        const title = document.querySelector('.title-box').value;
+        const text = document.querySelector('.text-box').value;
+        alert(`Title: ${title}\nText: ${text}\nText saved!`);
+    }
+
+    function startNew() {
+        // Clear the text in the textarea and the title in the input field
+        document.querySelector('.title-box').value = '';
+        document.getElementById("content").value = '';
+    }
+</script>
+<script>
+    
+        document.getElementById('fileInput').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const fileContent = e.target.result;
+                const fileName = file.name;
+                
+                // Populate the title input box with the file name (you can modify this as needed)
+                document.getElementById('title').value = fileName;
+                
+                // Populate the content textarea with the file content
+                document.getElementById('content').value = fileContent;
+            };
+            reader.readAsText(file);
+        }
+    });
+    
+</script>
+
+    
+</body>
+</html>

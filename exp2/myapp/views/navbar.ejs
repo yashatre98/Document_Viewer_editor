@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Style the navigation bar */
+        .navbar {
+            background-color: #333; /* Dark background color */
+            color: #fff; /* Text color */
+            padding: 10px 0;
+            font-family: Arial, sans-serif;
+            position: fixed; /* Make the navigation bar fixed */
+            top: 0; /* Stick it to the top of the page */
+            left: 0;
+            right: 0;
+            z-index: 2;
+        }
+
+        /* Center the list items horizontally */
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Style each list item */
+        .navbar li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        /* Style the links */
+        .navbar a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+            transition: color 0.3s; /* Smooth color transition on hover */
+        }
+
+        /* Change link color on hover */
+        .navbar a:hover {
+            /* Adjust the color as needed, or remove it if you don't want a color change on hover */
+            color: #007BFF; /* Hover color */
+        }
+
+        /* Modern button-like effect on links */
+        .navbar a::before {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 3px; /* Underline height */
+            background: transparent;
+            bottom: 0;
+            left: 0;
+            transition: background 0.3s; /* Smooth transition */
+        }
+
+        /* Change underline color on hover */
+        .navbar a:hover::before {
+            background: #007BFF;
+        }
+
+        /* Responsive design for small screens */
+        @media (max-width: 768px) {
+            .navbar ul {
+                text-align: center;
+            }
+            .navbar li {
+                display: block;
+                margin: 10px 0;
+            }
+            .navbar a {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="/create">Create New Document</a></li>
+            <li><a href="/">See All Documents</a></li>
+        </ul>
+    </div>
+</body>
+</html>
